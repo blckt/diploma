@@ -1,0 +1,18 @@
+{
+  "name": "hapi-boilerplate",
+  "dependencies": {},
+  "globalDependencies": {
+    "async": "registry:dt/async#2.0.1+20160804113311",
+    "bcrypt": "registry:dt/bcrypt#0.0.0+20160316155526",
+    "config": "registry:dt/config#0.0.0+20160317120654",
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
+    "hapi": "registry:dt/hapi#13.0.0+20160818163303",
+    "joi": "registry:dt/joi#9.0.0+20160906140128",
+    "jsonwebtoken": "registry:dt/jsonwebtoken#0.0.0+20160720062725",
+    "lodash": "registry:dt/lodash#4.14.0+20160830145422",
+    "node": "registry:dt/node#6.0.0+20160919063032",
+    "sequelize": "registry:dt/sequelize#3.4.1+20160815132916",
+    "sequelize-fixtures": "registry:dt/sequelize-fixtures#0.0.0+20160317120654",
+    "validator": "registry:dt/validator#5.7.0+20160914130311"
+  }
+}

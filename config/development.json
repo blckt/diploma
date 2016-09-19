@@ -1,10 +1,12 @@
 {
-	"port":3000,
-  "database" : {
-    "username": "development_user",
-    "password": "development_password",
-    "database": "development_database",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+  "port": 3000,
+  "database": {
+    "username": "blckt",
+    "password": "sadilo1994",
+    "database": "scheduler_dev",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": 5432,
+    "url": "postgres://mqkjeaoeavjoab:30BGNTN3B9AnwtXjlxMboTi6zb@ec2-23-21-165-201.compute-1.amazonaws.com:5432/d97fd8rfbieveb"
   }
 }
