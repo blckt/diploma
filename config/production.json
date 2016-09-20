@@ -1,10 +1,13 @@
 {
-	"port":80,
-  "database" : {
-    "username": "production_user",
-    "password": "production_password",
-    "database": "production_database",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+  "port": 80,
+  "database": {
+    "username": "mqkjeaoeavjoab",
+    "password": "30BGNTN3B9AnwtXjlxMboTi6zb",
+    "database": "d97fd8rfbieveb",
+    "host": "ec2-23-21-165-201.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": true
+    }
   }
 }
