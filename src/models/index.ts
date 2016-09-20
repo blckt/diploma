@@ -3,8 +3,13 @@ const path = require( 'path' );
 import { Model } from  'sequelize' ;
 const Sequelize = require( 'sequelize' );
 const config = require( 'config' ).database;
-const sequelize = new Sequelize( config.database, config.username, config.password, config );
 
+let sequelize;
+if ( process.env.DATABASE_URL ) {
+    sequelize = new Sequelize( process.env.DATABASE_URL, config );
+} else {
+    sequelize = new Sequelize( config.database, config.username, config.password, config );
+}
 /*
  MODELS
  */
