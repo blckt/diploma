@@ -13,7 +13,7 @@ import * as _UserInRoles from './usersinroles';
 import * as _Roles from './roles';
 
 
-const db: {User?: Model<{
+const db: {Roles?: any,User?: Model<{
     login: string,
     password: string,
     validatePassword( password ): boolean;

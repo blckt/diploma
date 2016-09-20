@@ -3,12 +3,14 @@ import * as jwt from 'jsonwebtoken';
 import models from '../models';
 import * as randomString from 'randomstring';
 
+
 const login = {
     config: {
         auth: false,
         handler: ( request, reply ) => {
             let login = request.payload.login;
             let password = request.payload.password;
+            // reply( { login, password } );
             models.User.find( {
                 where: {
                     login
@@ -24,6 +26,8 @@ const login = {
                         expiresIn: 60 * 60 * 24 * 14
                     } );
                     reply( { token } );
+                } else {
+                    reply( { error: 'wron email or password' } );
                 }
             } );
         },
@@ -37,8 +41,10 @@ const login = {
 };
 const ping = {
     config: {
-        auth: true,
+        auth: 'jwt',
         handler: ( request, reply ) => {
+            //  console.log( request.auth );
+            reply( request.auth.credentials );
         }
     }
 };
@@ -55,11 +61,10 @@ const register = {
         handler: ( request, reply ) => {
             let login = request.payload.login;
             let password = randomString.generate( 12 );
-            reply( password );
             models.User.findOrCreate( {
                 where: {
                     login
-                }, default: {
+                }, defaults: {
                     password
                 }
             } ).spread( ( user, isCreated ) => {
@@ -68,15 +73,7 @@ const register = {
                 }
                 models.Roles.findById( 1 ).then( role => {
                     user.addRole( role );
-                    let token = jwt.sign( {
-                        id: user.id,
-                        login: user.login,
-                        createdAt: user.createdAt,
-                        role: role.RoleName
-                    }, 'asdas das d13 4e2!', {
-                        expiresIn: 60 * 60 * 24 * 14
-                    } );
-                    reply( { token } );
+                    reply( { password } );
                 } );
             } );
         },
@@ -89,18 +86,30 @@ const register = {
 };
 
 const tokenValidation = ( decoded, request, callback ) => {
-    models.User.find( {
-        where: {
+    let options = {
+        'where': {
             id: decoded.id,
             login: decoded.login,
             createdAt: decoded.createdAt
-        }
-    } ).then( ( data: {id: number, login: string, createdAt: Date, Role?: Array<string> | string } ) => {
+        },
+        include: [ { all: true } ]
+    };
+
+    models.User.findAll( options ).then( ( data: {id: number, login: string, createdAt: Date, Role?: Array<string> | string; getRole(): Promise } ) => {
         if ( !data ) {
             return callback( null, false, data );
         } else {
-            return callback( null, true, data );
+            let user = data [ 0 ];
+            let roles: Array<string> = JSON.parse( JSON.stringify( user ) ).Role.map( item => item.RoleName );
+            callback( null, true, {
+                id: user.id,
+                createdAt: user.createdAt,
+                login: user.login,
+                roles
+            } );
         }
+    } ).catch( err => {
+        callback( err, false, null );
     } );
 };
 

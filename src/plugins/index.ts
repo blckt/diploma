@@ -40,7 +40,13 @@ export default [
     },
     require( 'inert' ),
     require( 'hapi-auth-jwt2' ),
-    require( './jwtAuthPlugin' )
+    require( './jwtAuthPlugin' ),
+    {
+        register: require( 'hapi-authorization' ),
+        options: {
+            roles: [ 'USER', 'ADMIN', ]
+        }
+    }
     // require additional plugins here
 ];
 

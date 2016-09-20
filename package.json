@@ -7,6 +7,7 @@
   "license": "ISC",
   "scripts": {
     "start": "node build/server.js",
+    "herouku-prebuild":"npm install -g pm2 typescript typings && cd src && typings install && tsc -p",
     "start:dev": "nodemon build/server.js"
   },
   "keywords": [
@@ -34,9 +35,11 @@
     "good-squeeze": "^5.0.0",
     "hapi": "^15.0.3",
     "hapi-auth-jwt2": "^7.1.3",
+    "hapi-authorization": "^3.0.2",
     "inert": "^4.0.2",
     "joi": "^9.0.4",
     "jsonwebtoken": "^7.1.9",
+    "mega": "^0.2.0",
     "pg": "^3.6.3",
     "pg-hstore": "^2.3.2",
     "randomstring": "^1.1.5",

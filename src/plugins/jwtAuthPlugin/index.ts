@@ -17,6 +17,11 @@ module.exports.register = function ( server: Server, options, next ) {
             method: 'POST',
             path: '/register',
             config: auth.register.config
+        },
+        {
+            method: 'GET',
+            path: '/ping',
+            config: auth.ping.config
         } ] );
     next();
 };

@@ -1,4 +1,8 @@
 {
   "host":"0.0.0.0",
-  "cors":true
+  "cors":true,
+  "mega":{
+    "login":"renau94@gmail.com",
+    "password":"XOyrqqGOqltNSyUg"
+  }
 }

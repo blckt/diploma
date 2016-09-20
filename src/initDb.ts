@@ -14,7 +14,7 @@ export default function () {
             } ).then( user => {
                 user.addRole( role );
             } );
-        } )
+        } );
     }
 
 }
