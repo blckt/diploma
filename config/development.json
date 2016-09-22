@@ -1,8 +1,8 @@
 {
   "port": 3000,
   "database": {
-    "username": "blckt",
-    "password": "sadilo1994",
+    "username": "postgres",
+    "password": "secret",
     "database": "scheduler_dev",
     "host": "localhost",
     "dialect": "postgres",
