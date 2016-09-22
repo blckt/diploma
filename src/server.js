@@ -1,10 +1,10 @@
 const Hapi = require('hapi')
 
-const path = require( 'path' );
-const settings = require( 'config' );
+const path = require('path');
+const settings = require('config');
 const routes = require('./routes/routes');
 const plugins = require('./plugins');
-const initDataBaseData= require('./initDb');
+const initDataBaseData = require('./initDb');
 const models = require('./models');
 const serverOptions = {
     connections: {
@@ -21,61 +21,64 @@ const serverOptions = {
  request: [ 'error', 'response' ]
  }
  */
-const server = new Hapi.Server( serverOptions );
-server.connection( {
+const server = new Hapi.Server(serverOptions);
+server.connection({
     port: settings.port, host: settings.host, routes: {
         files: {
-            relativeTo: path.resolve( __dirname, '..', 'src', 'static' )
+            relativeTo: path.resolve(__dirname, '..', 'src', 'static')
         }
     }
-} );
+});
 
 // Export the server to be required elsewhere.
 module.exports = server;
 
-const initDb = function ( cb ) {
- let sequelize = models.sequelize;
+const initDb = function (cb) {
+    let sequelize = models.sequelize;
     // Test if we're in a sqlite memory database. we may need to run migrations.
-    if ( sequelize.getDialect() === 'sqlite' &&
-        (!sequelize.options.storage || sequelize.options.storage === ':memory:') ) {
-        sequelize.getMigrator( {
+    if (sequelize.getDialect() === 'sqlite' &&
+        (!sequelize.options.storage || sequelize.options.storage === ':memory:')) {
+        sequelize.getMigrator({
             path: process.cwd() + '/migrations',
-        } ).migrate().success( function () {
+        }).migrate().success(function () {
             // The migrations have been executed!
             cb();
-        } );
+        });
     } else {
-        sequelize.sync( { force: true } ).then( () => {
+        sequelize.sync({force: false}).then(() => {
             cb();
-            if ( process.env.NODE_END !== 'production' ) {
+            if (process.env.NODE_END !== 'production') {
                 initDataBaseData();
             }
-        } );
+        });
     }
 };
+//EXTENTIONS
 
-const setup = function ( done ) {
+require('./extensions')(server);
+//
+const setup = function (done) {
 
     // Register all plugins
-    server.register( plugins, function ( err ) {
-        if ( err ) {
+    server.register(plugins, function (err) {
+        if (err) {
             throw err; // something bad happened loading a plugin
         }
-    } );
+    });
 
     // Add the server routes
-    server.route( routes );
+    server.route(routes);
 
-    initDb( done );
+    initDb(done);
 };
 
 const start = function () {
-    server.start( function () {
-        server.log( 'info', 'Server running at: ' + server.info.uri );
-    } );
+    server.start(function () {
+        server.log('info', 'Server running at: ' + server.info.uri);
+    });
 };
 
 // If someone runs: "node server.js" then automatically start the server
-if ( path.basename( process.argv[ 1 ], '.js' ) == path.basename( __filename, '.js' ) ) {
-    setup( start );
+if (path.basename(process.argv[1], '.js') == path.basename(__filename, '.js')) {
+    setup(start);
 }

@@ -2,7 +2,6 @@
 const { hashSync, compareSync } = require('bcrypt')
 const SALT_ROUND = 10;
 
-
 module.exports = function ( sequelize, DataTypes) {
     var User = sequelize.define( 'User', {
         login: {
@@ -10,6 +9,7 @@ module.exports = function ( sequelize, DataTypes) {
         },
         password: {
             type: DataTypes.STRING,
+            roles:false,
             set: function ( password ) {
                 this.setDataValue( 'password', hashSync( password, SALT_ROUND ) );
             }

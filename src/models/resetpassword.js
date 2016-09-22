@@ -5,6 +5,9 @@ module.exports = function(sequelize, DataTypes) {
       type:DataTypes.UUID,
       primaryKey:true,
   },
+    token:{
+      type: DataTypes.STRING
+  },
     isUsed: DataTypes.BOOLEAN
   }, {
     classMethods: {

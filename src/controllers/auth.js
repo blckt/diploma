@@ -14,6 +14,7 @@ const login = {
             'use strict';
             let login = request.payload.login;
             let password = request.payload.password;
+            console.log(login,password);
             models.User.find({
                 where: {
                     login
@@ -34,12 +35,7 @@ const login = {
                 }
             });
         },
-        validate: {
-            payload: {
-                login: Joi.string(),
-                password: Joi.string()
-            }
-        }
+
     }
 };
 const ping = {

@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 const auth = require('../../controllers/index').auth;
-
+const config= require('config');
 module.exports.register = function ( server, options, next ) {
     server.auth.strategy( 'jwt', 'jwt', true, {
-        key: 'asdas das d13 4e2!',
+        key: config.get('secret'),
         validateFunc: auth.tokenValidation,
         verifyOptions: { algorithms: [ 'HS256' ] }
     } );
