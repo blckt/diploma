@@ -31,3 +31,13 @@ node_modules
 .lock-wscript
 .idea
 build
+.DS_STORE
+*.log
+
+node_modules
+
+dist
+coverage
+
+.idea/
+
