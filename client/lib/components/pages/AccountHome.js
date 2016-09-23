@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { defineMessages, FormattedMessage } from 'react-intl'
-
-const messages = defineMessages({
+import {
+  defineMessages,
+  FormattedMessage
+} from 'react-intl'
+const messages = defineMessages ({
   accountIntro: {
     id: 'account.home.intro',
     description: 'Introduction message of the account home page',
@@ -12,7 +14,7 @@ const messages = defineMessages({
     id: 'account.home.steps',
     description: 'Introduction message of the account home page',
     defaultMessage: 'You can {logoutLink} or try to access a {secretAreaLink} '
-      + 'without a necessary permissions.'
+    + 'without a necessary permissions.'
   },
   accountSuperSecretArea: {
     id: 'account.home.link.superSecretArea',
@@ -36,10 +38,11 @@ export default class AccountHome extends React.Component {
         </div>
         <div className="content">
           <p>
+            {console.log (this)}
             <FormattedMessage {...messages.accountIntro} />
             <br/>
             <FormattedMessage {...messages.accountSteps}
-              values={{ logoutLink, secretAreaLink }} />
+              values={{ logoutLink, secretAreaLink }}/>
           </p>
         </div>
       </div>

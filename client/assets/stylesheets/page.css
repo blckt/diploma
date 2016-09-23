@@ -143,3 +143,6 @@ a:visited { color: #265778; }
   :--header h2 { font-size: 128%; }
 }
 
+input{
+  min-width: 250px;
+}

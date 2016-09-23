@@ -10,14 +10,19 @@ const initialState = {
     // permissions: ['manage_account']
     permissions: []
   },
-  error: null
+  error: null,
+  pinged: false
 }
 
 const actionHandlers = {
   [constants.LOGGED_IN]: (_, action) => action.payload,
   [constants.LOG_OUT]: () => ({ token: null }),
   [constants.LOCALE_SWITCHED]: (_, action) => ({ locale: action.payload }),
+  [constants.LOGIN_ERROR]: (_, action) => ({ error: action.payload }),
+  [constants.PING_AUTH]: (_, action) => {
 
+    return { user: action.payload, pinged: true }
+  },
   // TODO: this handle only API error responses.
   // We should also handle all other kind of application errors,
   // report them and show some kind of helpful message to the user.
@@ -30,7 +35,7 @@ const actionHandlers = {
         source,
         message: payload.message,
         statusCode: payload.statusCode || payload.code,
-        body: payload.body || (payload instanceof Error ?
+        body: payload.body || (payload instanceof Error ?
           (payload.toString() + '\n' + payload.stack) : payload)
       }
     })

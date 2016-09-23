@@ -13,28 +13,29 @@ export default class Login extends React.Component {
   };
 
   constructor (props) {
-    super(props)
+    super (props)
     this.state = { login: null, password: null }
   }
 
   handleInputChange (evt) {
-    this.setState({
+    this.setState ({
       [evt.target.name]: evt.target.value
     })
   }
 
   handleSubmit (evt) {
-    evt.preventDefault()
+    evt.preventDefault ()
+    if (!this.state.login || !this.state.password)    return
+
     const { history, store } = this.context
     const { location } = this.props
 
     let nextPath = '/account'
     if (location.state && location.state.nextPathname)
       nextPath = location.state.nextPathname
-
-    store.dispatch(actions.login(this.state, () => {
+    store.dispatch (actions.login (this.state, () => {
       // redirect to a secure page
-      history.pushState({}, nextPath)
+      history.pushState ({}, nextPath)
     }))
   }
 
@@ -52,15 +53,16 @@ export default class Login extends React.Component {
             <fieldset>
               <div className="pure-control-group">
                 <label htmlFor="login">Login</label>
-                <input type="text" name="login" defaultValue="foo@bar.com" />
+                <input type="text" name="login" placeholder="Enter your login please..."/>
               </div>
               <div className="pure-control-group">
                 <label htmlFor="password">Password</label>
-                <input type="password" name="password" defaultValue="secret" />
+                <input type="password" name="password" placeholder="Enter your password please..."/>
               </div>
-              <button type="submit"
-                className="pure-button pure-button-primary"
-                >Login</button>
+              <button type="submit" disabled={!this.state.login || !this.state.password}
+                      className="pure-button pure-button-primary"
+              >Login
+              </button>
             </fieldset>
           </form>
         </div>

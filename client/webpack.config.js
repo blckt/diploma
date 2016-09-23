@@ -3,7 +3,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
   entry: [
     'babel-polyfill',
     'webpack-hot-middleware/client',

@@ -10,17 +10,16 @@ import {
 import { ReduxRouter } from 'redux-router'
 import { connect } from 'react-redux'
 import {
-  IntlProvider,
-  addLocaleData
+  IntlProvider
 } from 'react-intl'
 import configureStore from './utils/configure-store'
 import * as storage from './persistence/storage'
 import * as components from './components'
 import * as constants from './constants'
 import * as i18n from './i18n'
-import ru from 'react-intl/lib/locale-data/ru'
+import 'whatwg-fetch'
+import { pingAuth } from './actions/application'
 
-addLocaleData ([...ru])
 
 const {
   About,
@@ -39,7 +38,8 @@ const initialState = {
   application: {
     token: storage.get ('token'),
     locale: storage.get ('locale') || 'en',
-    user: { permissions: [/*'manage_account'*/] }
+    user: { permissions: [/*'manage_account'*/] },
+    pinged:false,
   }
 }
 
@@ -52,7 +52,7 @@ function getRootChildren (props) {
   }
   const rootChildren = [
     <IntlProvider key="intl" {...intlData}>
-      {renderRoutes ()}
+      {renderRoutes () }
     </IntlProvider>
   ]
 
@@ -88,11 +88,25 @@ function renderRoutes () {
 
 function requireAuth (nextState, replaceState) {
   const state = store.getState ()
-  const isLoggedIn = Boolean (state.application.token)
+  const isLoggedIn = !!state.application.token;
+  const isChecked = !state.application.pinged
   if (!isLoggedIn)
+  {
     replaceState ({
-      nextPathname: nextState.location.pathname
-    }, '/login')
+      nextPathname: nextState.location.pathname,
+      state:'login'
+    })
+  }
+  if(isLoggedIn && isChecked)
+  fetch ('http://localhost:3000/auth/ping', {
+    headers: new Headers ({ 'Authorization': state.application.token })
+  })
+    .then (response => response.json ())
+    .catch (err => console.log (err))
+    .then (response => {
+      store.dispatch (pingAuth (response.user))
+
+    })
 }
 
 function logout (nextState, replaceState) {
@@ -106,8 +120,9 @@ class Root extends React.Component {
   };
 
   render () {
+
     return (
-      <div>{getRootChildren (this.props)}</div>
+      <div>{getRootChildren (this.props) }</div>
     )
   }
 }
