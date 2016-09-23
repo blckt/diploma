@@ -13,7 +13,7 @@ const serverOptions = {
         }
     }
 };
-
+const SYNC_DB_FORCE=process.env.NODE_ENV==='production' ||  process.argv[process.argv.length-1]==='true';
 /*
  ,
  debug: {
@@ -45,9 +45,9 @@ const initDb = function (cb) {
             cb();
         });
     } else {
-        sequelize.sync({force: false}).then(() => {
+        sequelize.sync({force: SYNC_DB_FORCE}).then(() => {
             cb();
-            if (process.env.NODE_END !== 'production') {
+            if (SYNC_DB_FORCE) {
                 initDataBaseData();
             }
         });

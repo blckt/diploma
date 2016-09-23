@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node src/server.js",
     "herouku-prebuild": "npm install -g pm2 typescript typings && cd src && typings install && tsc -p",
+    "start:devForce": "nodemon src/server.js --ignore client true",
     "start:dev": "nodemon src/server.js --ignore client"
   },
   "keywords": [
