@@ -35,6 +35,12 @@ const login = {
                 }
             });
         },
+        validate:{
+            payload:{
+                login:Joi.string().required(),
+                password:Joi.string().required(),
+            }
+        }
 
     }
 };
