@@ -1,6 +1,6 @@
 /*eslint-disable max-len*/
-import React from 'react'
-import { defineMessages, FormattedMessage } from 'react-intl'
+import React from 'react';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
 const messages = defineMessages({
   welcome: {
@@ -34,19 +34,19 @@ const messages = defineMessages({
     id: 'home.intro3.dropAnIssue',
     defaultMessage: 'drop an issue'
   }
-})
+});
 
 
 export default class Home extends React.Component {
 
   render () {
     const linkRedux = (<a href="https://github.com/gaearon/redux"
-      target="_blank">Redux</a>)
+      target="_blank">Redux</a>);
     const linkRouter = (<a href="https://github.com/rackt/react-router"
-      target="_blank">React Router</a>)
+      target="_blank">React Router</a>);
     const linkIssues = (<a
       href="https://github.com/emmenko/redux-react-router-async-example/issues"
-      target="_blank"><FormattedMessage {...messages.dropIssue} /></a>)
+      target="_blank"><FormattedMessage {...messages.dropIssue} /></a>);
     return (
       <div>
         <div className="header">
@@ -66,6 +66,6 @@ export default class Home extends React.Component {
           </p>
         </div>
       </div>
-    )
+    );
   }
 }

@@ -1,13 +1,14 @@
-export const FETCH_USER = 'FETCH_USER'
-export const FETCH_REPO = 'FETCH_REPO'
-export const FETCH_USER_STARGAZERS = 'FETCH_USER_STARGAZERS'
-export const FETCH_REPO_STARGAZERS = 'FETCH_REPO_STARGAZERS'
+export const FETCH_USER = 'FETCH_USER';
+export const FETCH_REPO = 'FETCH_REPO';
+export const FETCH_USER_STARGAZERS = 'FETCH_USER_STARGAZERS';
+export const FETCH_REPO_STARGAZERS = 'FETCH_REPO_STARGAZERS';
 
-export const LOGGED_IN = 'LOGGED_IN'
-export const LOG_OUT = 'LOG_OUT'
-export const LOGIN_ERROR = 'LOGIN_ERROR'
-export const PING_AUTH= 'PING_AUTH'
+export const LOGGED_IN = 'LOGGED_IN';
+export const LOG_OUT = 'LOG_OUT';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const PING_AUTH= 'PING_AUTH';
+export const REGISTER_USERS= 'REGISTER_USERS';
 
-export const LOCALE_SWITCHED = 'LOCALE_SWITCHED'
-export const SHOW_ERROR = 'SHOW_ERROR'
-export const HIDE_ERROR = 'HIDE_ERROR'
+export const LOCALE_SWITCHED = 'LOCALE_SWITCHED';
+export const SHOW_ERROR = 'SHOW_ERROR';
+export const HIDE_ERROR = 'HIDE_ERROR';

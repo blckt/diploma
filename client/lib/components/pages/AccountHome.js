@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React from 'react';
+import { Link } from 'react-router';
 import {
   defineMessages,
   FormattedMessage
-} from 'react-intl'
+} from 'react-intl';
 const messages = defineMessages ({
   accountIntro: {
     id: 'account.home.intro',
@@ -21,15 +21,15 @@ const messages = defineMessages ({
     description: 'Link text to super secret area',
     defaultMessage: 'super secret area'
   }
-})
+});
 
 export default class AccountHome extends React.Component {
   render () {
-    const logoutLink = (<Link to="/logout">logout</Link>)
+    const logoutLink = (<Link to="/logout">logout</Link>);
     const secretAreaLink = (
       <Link to="/account/secret-area">
         <FormattedMessage {...messages.accountSuperSecretArea} />
-      </Link>)
+      </Link>);
 
     return (
       <div>
@@ -38,7 +38,6 @@ export default class AccountHome extends React.Component {
         </div>
         <div className="content">
           <p>
-            {console.log (this)}
             <FormattedMessage {...messages.accountIntro} />
             <br/>
             <FormattedMessage {...messages.accountSteps}
@@ -46,6 +45,6 @@ export default class AccountHome extends React.Component {
           </p>
         </div>
       </div>
-    )
+    );
   }
 }

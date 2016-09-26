@@ -25,12 +25,17 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "async": "^2.0.1",
+    "bootstrap": "^3.3.7",
     "classnames": "~2.2.3",
+    "excellentexport": "^1.5.0",
+    "file-loader": "^0.9.0",
     "history": "~1.17.0",
     "intl": "~1.0.1",
     "parse-link-header": "~0.4.1",
     "purecss": "~0.6.0",
     "react": "~0.14.6",
+    "react-bootstrap": "^0.30.3",
     "react-dom": "~0.14.6",
     "react-intl": "2.0.0-beta-1",
     "react-pure-render": "~1.0.2",
@@ -38,7 +43,8 @@
     "react-router": "~1.0.3",
     "redux": "~3.0.5",
     "redux-router": "~1.0.0-beta7",
-    "redux-thunk": "~1.0.3",
+    "redux-thunk": "^2.1.0",
+    "url-loader": "^0.5.7",
     "whatwg-fetch": "~0.10.1"
   },
   "devDependencies": {

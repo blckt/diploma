@@ -16,4 +16,4 @@ export default {
   "home.welcome": "добро пожаловать",
   "stargazers.subtitle": "Смотрите звездочеты на свой счет GitHub и сделкам РЕПО.",
   "superSecretArea.info": "Это частная территория."
-}
+};

@@ -16,4 +16,4 @@ export default {
   "home.welcome": "Willkommen",
   "stargazers.subtitle": "Die Stargazers für dein GitHub Account und Repos anzeigen.",
   "superSecretArea.info": "Das ist ein gesperrter Bereich."
-}
+};

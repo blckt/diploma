@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import * as actions from '../../actions/application'
+import React, { PropTypes } from 'react';
+import * as actions from '../../actions/application';
 
 export default class Login extends React.Component {
 
@@ -13,30 +13,30 @@ export default class Login extends React.Component {
   };
 
   constructor (props) {
-    super (props)
-    this.state = { login: null, password: null }
+    super (props);
+    this.state = { login: null, password: null };
   }
 
   handleInputChange (evt) {
     this.setState ({
       [evt.target.name]: evt.target.value
-    })
+    });
   }
 
   handleSubmit (evt) {
-    evt.preventDefault ()
-    if (!this.state.login || !this.state.password)    return
+    evt.preventDefault ();
+    if (!this.state.login || !this.state.password)    return;
 
-    const { history, store } = this.context
-    const { location } = this.props
+    const { history, store } = this.context;
+    const { location } = this.props;
 
-    let nextPath = '/account'
+    let nextPath = '/account';
     if (location.state && location.state.nextPathname)
-      nextPath = location.state.nextPathname
+      nextPath = location.state.nextPathname;
     store.dispatch (actions.login (this.state, () => {
       // redirect to a secure page
-      history.pushState ({}, nextPath)
-    }))
+      history.pushState ({}, nextPath);
+    }));
   }
 
   render () {
@@ -67,6 +67,6 @@ export default class Login extends React.Component {
           </form>
         </div>
       </div>
-    )
+    );
   }
 }

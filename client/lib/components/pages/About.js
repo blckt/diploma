@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router'
-import { defineMessages, FormattedMessage } from 'react-intl'
+import React from 'react';
+import { Link } from 'react-router';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
 const messages = defineMessages({
   aboutThanks: {
@@ -15,12 +15,12 @@ const messages = defineMessages({
     defaultMessage: 'This website is a showcase of different technologies ' +
       'and libraries such as:'
   }
-})
+});
 
 export default class About extends React.Component {
   render () {
-    const link = (<Link to="/stargazers/gaearon"><code>@gaearon</code></Link>)
-    const redux = (<code>Redux</code>)
+    const link = (<Link to="/stargazers/gaearon"><code>@gaearon</code></Link>);
+    const redux = (<code>Redux</code>);
 
     return (
       <div>
@@ -54,6 +54,6 @@ export default class About extends React.Component {
             </ul>
         </div>
       </div>
-    )
+    );
   }
 }

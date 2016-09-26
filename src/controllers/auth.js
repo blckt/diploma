@@ -21,7 +21,15 @@ const login = {
               }
             })
             .then (user => {
-              if (user.validatePassword (password)) {
+              if (!user) {
+                return reply ({
+                  error: {
+                    message: 'User doesn`t exist',
+                    code: 404,
+                  }
+                });
+              }
+              if (user && user.validatePassword (password)) {
                 let token = jwt.sign ({
                   id: user.id,
                   login: user.login,
@@ -32,7 +40,12 @@ const login = {
                 });
                 reply ({ token });
               } else {
-                reply ({ error: 'wron email or password' });
+                reply ({
+                  error: {
+                    message: 'wrong login or password',
+                    code: 404
+                  }
+                });
               }
             });
     },
@@ -85,12 +98,12 @@ const register = {
             })
             .spread ((user, isCreated) => {
               if (!isCreated) {
-                return reply ({ Error: 'Login already in use' });
+                return reply ({ login, error: `Login ${login} already in use` });
               }
               models.Roles.findById (1)
                     .then (role => {
                       user.addRole (role);
-                      reply ({ password });
+                      reply ({ login, password });
                     });
             });
     },
@@ -98,6 +111,7 @@ const register = {
       payload: {
         login: Joi.string ()
                   .max (16)
+                  .min (5)
                   .required ()
       }
     }

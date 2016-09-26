@@ -1,5 +1,5 @@
-import React from 'react'
-import { defineMessages, FormattedMessage } from 'react-intl'
+import React from 'react';
+import { defineMessages, FormattedMessage } from 'react-intl';
 
 const messages = defineMessages({
   forbidden: {
@@ -11,7 +11,7 @@ const messages = defineMessages({
     description: 'The user doesn\'t have permissions to access the page',
     defaultMessage: 'You are not authorized to see the XXX page'
   }
-})
+});
 
 export default class Forbidden extends React.Component {
   render () {
@@ -29,6 +29,6 @@ export default class Forbidden extends React.Component {
           </p>
         </div>
       </div>
-    )
+    );
   }
 }

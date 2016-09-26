@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import * as applicationActions from '../actions/application'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import * as applicationActions from '../actions/application';
 
 class DisplayError extends React.Component {
 
@@ -10,9 +10,9 @@ class DisplayError extends React.Component {
   };
 
   render () {
-    const { props: { hideError, error } } = this
+    const { props: { hideError, error } } = this;
 
-    if (!error) return null
+    if (!error) return null;
 
     return (
       <div className="error-message">
@@ -29,11 +29,11 @@ class DisplayError extends React.Component {
           </pre>
         </div>
       </div>
-    )
+    );
   }
 }
 
 export default connect(
   ({ application }) => ({ error: application.error }),
   applicationActions
-)(DisplayError)
+)(DisplayError);

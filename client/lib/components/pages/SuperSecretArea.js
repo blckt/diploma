@@ -1,6 +1,6 @@
-import React from 'react'
-import { defineMessages, FormattedMessage } from 'react-intl'
-import { secure } from '../../decorators'
+import React from 'react';
+import { defineMessages, FormattedMessage } from 'react-intl';
+import { secure } from '../../decorators';
 
 const messages = defineMessages({
   info: {
@@ -8,7 +8,7 @@ const messages = defineMessages({
     description: 'Intro message describing the page',
     defaultMessage: 'This is a restricted area.'
   }
-})
+});
 
 class SuperSecretArea extends React.Component {
   render () {
@@ -21,8 +21,8 @@ class SuperSecretArea extends React.Component {
           <p><FormattedMessage {...messages.info} /></p>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default secure('manage_account')(SuperSecretArea)
+export default secure('manage_account')(SuperSecretArea);

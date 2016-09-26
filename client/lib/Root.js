@@ -1,66 +1,65 @@
 /* global __DEVTOOLS__ */
 
-import '../assets/stylesheets/index.css'
+//import '../assets/stylesheets/index.css';
 
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 import {
   Redirect,
-  Route
-} from 'react-router'
-import { ReduxRouter } from 'redux-router'
-import { connect } from 'react-redux'
+  Route,
+  IndexRoute
+} from 'react-router';
+import { ReduxRouter } from 'redux-router';
+import { connect } from 'react-redux';
 import {
   IntlProvider
-} from 'react-intl'
-import configureStore from './utils/configure-store'
-import * as storage from './persistence/storage'
-import * as components from './components'
-import * as constants from './constants'
-import * as i18n from './i18n'
-import 'whatwg-fetch'
-import { pingAuth } from './actions/application'
-
+} from 'react-intl';
+import configureStore from './utils/configure-store';
+import * as storage from './persistence/storage';
+import * as components from './components';
+import * as constants from './constants';
+import * as i18n from './i18n';
+import 'whatwg-fetch';
+import { pingAuth } from './actions/application';
 
 const {
   About,
   Account,
   AccountHome,
   Application,
-  GithubStargazers,
-  GithubRepo,
-  GithubUser,
   Home,
   Login,
-  SuperSecretArea
-} = components
+  SuperSecretArea,
+  ControlPanel,
+  UsersRegistration
+} = components;
 
 const initialState = {
   application: {
     token: storage.get ('token'),
     locale: storage.get ('locale') || 'en',
     user: { permissions: [/*'manage_account'*/] },
-    pinged:false,
+    pinged: false,
   }
-}
+};
 
-export const store = configureStore (initialState)
+export const store = configureStore (initialState);
 
 function getRootChildren (props) {
   const intlData = {
     locale: props.application.locale,
     messages: i18n[props.application.locale]
-  }
+  };
   const rootChildren = [
     <IntlProvider key="intl" {...intlData}>
       {renderRoutes () }
     </IntlProvider>
-  ]
+  ];
 
   if (__DEVTOOLS__) {
-    const DevTools = require ('./components/DevTools').default
-    rootChildren.push (<DevTools key="devtools"/>)
+    const DevTools = require ('./components/DevTools').default;
+    rootChildren.push (<DevTools key="devtools"/>);
   }
-  return rootChildren
+  return rootChildren;
 }
 
 function renderRoutes () {
@@ -69,10 +68,9 @@ function renderRoutes () {
       <Route component={Application}>
         <Route path="/" component={Home} onEnter={requireAuth}/>
         <Redirect from="/account" to="/account/profile"/>
-        <Route path="stargazers" component={GithubStargazers}
-               onEnter={requireAuth}>
-          <Route path=':username/:repo' component={GithubRepo}/>
-          <Route path=':username' component={GithubUser}/>
+        <Route path="dashboard" component={ControlPanel}>
+          <IndexRoute component={UsersRegistration}/>
+          <Route path="register" component={UsersRegistration}/>
         </Route>
         <Route path="about" component={About} onEnter={requireAuth}/>
         <Route path="account" component={Account} onEnter={requireAuth}>
@@ -83,35 +81,23 @@ function renderRoutes () {
         <Route path="logout" onEnter={logout}/>
       </Route>
     </ReduxRouter>
-  )
+  );
 }
 
 function requireAuth (nextState, replaceState) {
-  const state = store.getState ()
+  const state = store.getState ();
   const isLoggedIn = !!state.application.token;
-  const isChecked = !state.application.pinged
-  if (!isLoggedIn)
-  {
-    replaceState ({
-      nextPathname: nextState.location.pathname,
-      state:'login'
-    })
+  const isChecked = !state.application.pinged;
+  if (!isLoggedIn) {
+    replaceState ({ nextPathname: nextState.location.pathname }, '/login');
   }
-  if(isLoggedIn && isChecked)
-  fetch ('http://localhost:3000/auth/ping', {
-    headers: new Headers ({ 'Authorization': state.application.token })
-  })
-    .then (response => response.json ())
-    .catch (err => console.log (err))
-    .then (response => {
-      store.dispatch (pingAuth (response.user))
-
-    })
+  if (isLoggedIn && isChecked)
+    pingAuth (state);
 }
 
 function logout (nextState, replaceState) {
-  store.dispatch ({ type: constants.LOG_OUT })
-  replaceState ({}, '/login')
+  store.dispatch ({ type: constants.LOG_OUT });
+  replaceState ({}, '/login');
 }
 
 class Root extends React.Component {
@@ -123,8 +109,8 @@ class Root extends React.Component {
 
     return (
       <div>{getRootChildren (this.props) }</div>
-    )
+    );
   }
 }
 
-export default connect (({ application }) => ({ application })) (Root)
+export default connect (({ application }) => ({ application })) (Root);

@@ -1,5 +1,5 @@
-import * as constants from '../constants'
-import createReducer from '../utils/create-reducer'
+import * as constants from '../constants';
+import createReducer from '../utils/create-reducer';
 
 const initialState = {
   user: {},
@@ -9,7 +9,7 @@ const initialState = {
     repo: [],
     pagination: {}
   }
-}
+};
 
 const actionHandlers = {
   [constants.FETCH_USER]: (state, action) => ({ user: action.user }),
@@ -28,6 +28,6 @@ const actionHandlers = {
         pagination: action.pagination
       })
     })
-}
+};
 
-export default createReducer(initialState, actionHandlers)
+export default createReducer(initialState, actionHandlers);
