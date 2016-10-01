@@ -3,10 +3,10 @@
   "database": {
     "username": "postgres",
     "password": "secret",
-    "database": "scheduler_dev",
-    "host": "localhost",
-    "dialect": "postgres",
-    "port": 5432,
+    "database": "schedulerDB",
+    "host": "blcktdb.database.windows.net",
+    "dialect": "mssql",
+    "port":1433,
     "url": "postgres://mqkjeaoeavjoab:30BGNTN3B9AnwtXjlxMboTi6zb@ec2-23-21-165-201.compute-1.amazonaws.com:5432/d97fd8rfbieveb"
   }
 }

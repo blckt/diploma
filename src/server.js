@@ -68,8 +68,8 @@ const setup = function (done) {
 
     // Add the server routes
     server.route(routes);
-
-    initDb(done);
+    done();
+   // initDb(done);
 };
 
 const start = function () {
