@@ -1,4 +1,4 @@
 
-configurationsOptions = [].concat(require('./indexRoute'));
+configurationsOptions = [].concat(require('./indexRoute'),require('./studentRoutes'));
 
 module.exports= configurationsOptions;

@@ -1,4 +1,3 @@
-
 import '../assets/stylesheets/index.css';
 
 import React from 'react';
@@ -9,6 +8,10 @@ import { addLocaleData } from 'react-intl';
 import en from 'react-intl/lib/locale-data/en';
 import de from 'react-intl/lib/locale-data/de';
 import ru from 'react-intl/lib/locale-data/ru';
+import 'jquery/dist/jquery.min';
+import 'bootstrap/dist/js/bootstrap.min';
+import 'bootstrap-fileinput/js/fileinput';
+import { MuiThemeProvider } from 'material-ui';
 
 addLocaleData(en);
 addLocaleData(de);
@@ -26,7 +29,9 @@ else start();
 function start () {
   ReactDOM.render(
     <Provider store={store}>
-      <Root />
+      <MuiThemeProvider>
+        <Root/>
+      </MuiThemeProvider>
     </Provider>
-  , document.getElementById('app'));
+    , document.getElementById('app'));
 }

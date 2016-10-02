@@ -13,18 +13,19 @@ import {
 
 const routerMenuItems = [
   { text: 'Users Registrartion', to: '/dashboard/register', icon: 'fa fa-user' },
-  { text: 'Users control', to: '/dashboard/users', icon: 'fa fa-users' }
+  { text: 'Users control', to: '/dashboard/users', icon: 'fa fa-users' },
+  { text: 'xls upload', to: '/dashboard/tables', icon: 'fa fa-evenlope' }
 ];
 
 
 class ControlPanel extends React.Component {
   constructor (props) {
-    super (props);
+    super(props);
   }
 
   static propTypes = {
     application: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired
+    children   : PropTypes.object.isRequired
   };
 
   render () {
@@ -33,10 +34,11 @@ class ControlPanel extends React.Component {
 
         <Grid className="full-width">
           <Row className="full-width">
-            <Col sm={12} md={1} >
+            <Col sm={12} md={2}>
               <ul className="nav nav-pills nav-stacked">
-                {routerMenuItems.map ((item, i)=><li role="presentation"><Link className='link'  {...item}
-                                                                               key={i}>{item.text}</Link>
+                {routerMenuItems.map((item, i)=><li role="presentation" key={i+'s'}><Link
+                  className='link'  {...item}
+                  key={i}>{item.text}</Link>
                 </li>)}
               </ul>
             </Col>
@@ -51,4 +53,4 @@ class ControlPanel extends React.Component {
 }
 
 
-export default connect (({ application }) => ({ application })) (ControlPanel);
+export default connect(({ application }) => ({ application }))(ControlPanel);

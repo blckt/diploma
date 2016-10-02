@@ -9,3 +9,4 @@ export { default as Home } from './pages/Home';
 export { default as SuperSecretArea } from './pages/SuperSecretArea';
 export { default as ControlPanel } from './pages/ControlPanel/ControlPanel';
 export { default as UsersRegistration } from './pages/ControlPanel/UsersRegistration';
+export { default as XlsPage } from './pages/ControlPanel/XlsPage';

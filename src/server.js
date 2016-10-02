@@ -13,7 +13,7 @@ const serverOptions = {
         }
     }
 };
-const SYNC_DB_FORCE=process.env.NODE_ENV==='production' ||  process.argv[process.argv.length-1]==='true';
+const SYNC_DB_FORCE = process.env.NODE_ENV === 'production' || process.argv[process.argv.length - 1] === 'true';
 /*
  ,
  debug: {
@@ -33,34 +33,43 @@ server.connection({
 // Export the server to be required elsewhere.
 module.exports = server;
 
-const initDb = function (cb) {
+const initDb = function(cb) {
     let sequelize = models.sequelize;
     // Test if we're in a sqlite memory database. we may need to run migrations.
     if (sequelize.getDialect() === 'sqlite' &&
         (!sequelize.options.storage || sequelize.options.storage === ':memory:')) {
         sequelize.getMigrator({
             path: process.cwd() + '/migrations',
-        }).migrate().success(function () {
+        }).migrate().success(function() {
             // The migrations have been executed!
             cb();
         });
     } else {
-        sequelize.sync({force: SYNC_DB_FORCE}).then(() => {
-            cb();
+        sequelize.sync({ force: SYNC_DB_FORCE }).then(() => {
             if (SYNC_DB_FORCE) {
                 initDataBaseData();
             }
-        });
+        }).catch(err=>console.log(err));
+
+        sequelize
+            .authenticate()
+            .then(function(err) {
+                cb();
+                console.log('Connection has been established successfully.');
+            })
+            .catch(function (err) {
+                console.log('Unable to connect to the database:', err);
+            });
     }
 };
 //EXTENTIONS
 
 require('./extensions')(server);
 //
-const setup = function (done) {
+const setup = function(done) {
 
     // Register all plugins
-    server.register(plugins, function (err) {
+    server.register(plugins, function(err) {
         if (err) {
             throw err; // something bad happened loading a plugin
         }
@@ -68,12 +77,11 @@ const setup = function (done) {
 
     // Add the server routes
     server.route(routes);
-    done();
-   // initDb(done);
+    initDb(done);
 };
 
-const start = function () {
-    server.start(function () {
+const start = function() {
+    server.start(function() {
         server.log('info', 'Server running at: ' + server.info.uri);
     });
 };
