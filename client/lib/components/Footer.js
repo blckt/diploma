@@ -12,7 +12,7 @@ const messages = defineMessages({
 export default class Footer extends React.Component {
 
   render () {
-    const link = (<a href="http://purecss.io/" target="_blank">PureCSS</a>);
+    const link = (<a href="#" target="_blank">Welcome</a>);
     return (
       <div className="footer">
         <div className="pure-g">

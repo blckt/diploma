@@ -12,7 +12,6 @@ class Application extends React.Component {
   constructor (props, context) {
     super (props, context);
     this.handleMenuClick = this.handleMenuClick.bind (this);
-
     this.state = {
       isMenuActive: false
     };

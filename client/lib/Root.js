@@ -31,23 +31,24 @@ const {
   SuperSecretArea,
   ControlPanel,
   UsersRegistration,
-  XlsPage
+  XlsPage,
+  UsersViewComponent
 } = components;
 
 const initialState = {
   application: {
-    token : storage.get('token'),
+    token: storage.get('token'),
     locale: storage.get('locale') || 'en',
-    user  : { permissions: [/*'manage_account'*/] },
+    user: { permissions: [/*'manage_account'*/] },
     pinged: false,
   }
 };
 
 export const store = configureStore(initialState);
 
-function getRootChildren (props) {
+function getRootChildren(props) {
   const intlData = {
-    locale  : props.application.locale,
+    locale: props.application.locale,
     messages: i18n[props.application.locale]
   };
   const rootChildren = [
@@ -63,7 +64,7 @@ function getRootChildren (props) {
   return rootChildren;
 }
 
-function renderRoutes () {
+function renderRoutes() {
   return (
     <ReduxRouter>
       <Route component={Application}>
@@ -73,6 +74,7 @@ function renderRoutes () {
           <IndexRoute component={UsersRegistration}/>
           <Route path="register" component={UsersRegistration}/>
           <Route path="tables" component={XlsPage}/>
+          <Route path="users" component={UsersViewComponent}/>
         </Route>
         <Route path="about" component={About} onEnter={requireAuth}/>
         <Route path="account" component={Account} onEnter={requireAuth}>
@@ -86,7 +88,7 @@ function renderRoutes () {
   );
 }
 
-function requireAuth (nextState, replaceState) {
+function requireAuth(nextState, replaceState) {
   const state = store.getState();
   const isLoggedIn = !!state.application.token;
   const isChecked = !state.application.pinged;
@@ -97,7 +99,7 @@ function requireAuth (nextState, replaceState) {
     pingAuth(state);
 }
 
-function logout (nextState, replaceState) {
+function logout(nextState, replaceState) {
   store.dispatch({ type: constants.LOG_OUT });
   replaceState({}, '/login');
 }
@@ -107,7 +109,7 @@ class Root extends React.Component {
     application: PropTypes.object.isRequired
   };
 
-  render () {
+  render() {
 
     return (
       <div>{getRootChildren(this.props) }</div>
