@@ -9,6 +9,11 @@ module.exports = [
     },
   },
   {
+      method:'GET',
+      path:'/group/{id}',
+      config:controllers.getGroup
+  },
+  {
     method:'POST',
     path:'/groups/add',
     config:controllers.addGroup
