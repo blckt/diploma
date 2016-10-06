@@ -21,5 +21,10 @@ module.exports = [
     method:'POST',
     path:'/students/add',
     config:controllers.addStudent
+  },
+  {
+    method:'GET',
+    path:'/student/{studentId}',
+    config:controllers.getStudent
   }
 ];

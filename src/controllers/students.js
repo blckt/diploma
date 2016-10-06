@@ -1,4 +1,4 @@
-const { Student, Group, Roles, User } = require('../models')
+const { Student, Group, Roles, User,StudentsInGroups } = require('../models')
 const Joi = require('joi')
 
 const getGroups = (request, reply) => {
@@ -8,12 +8,15 @@ const getGroup = {
   handler: (request, reply) => {
     const { id } = request.params
 
-    Group.find({where: {
-    id}}).then((group) => {
-      if (group) {
-        return group.getStudent().then(students=>reply(students));
+    Group.find({
+      where: {
+        id
       }
-      reply({Status: 'Not Found'}).code(404)
+    }).then((group) => {
+      if (group) {
+        return group.getStudent().then(students => reply(students));
+      }
+      reply({ Status: 'Not Found' }).code(404)
     })
   },
   validate: {
@@ -21,6 +24,31 @@ const getGroup = {
       id: Joi.number().required()
     }
   }
+}
+
+const getStudent = {
+  handler:(request,reply)=>{ 
+    const {studentId} = request.params;
+    Student.find({
+      where:{id:studentId},
+      include:[{
+        model:Group,
+        as:'Student'
+      }]
+    }).then((student)=>{
+        if(student){
+          console.log(student)
+          return reply({
+            student
+          });
+        }
+        reply({
+          status:'not found'
+        }).code(404);
+    })
+  },
+  auth:false
+ 
 }
 const addStudent = {
   handler: (request, reply) => {
@@ -32,14 +60,14 @@ const addStudent = {
     }).spread((group, isCreated) => {
       group.getStudent().then(data => console.log(data.get()))
       Student.bulkCreate(Students).spread(data => {
-        reply({status: 'ok'})
+        reply({ status: 'ok' })
         Student.findAll({
           where: {
             createdAt: data.createdAt
           }
         }).then(data => {
           group.addStudent(data)
-        // data.forEach(std=>)
+          // data.forEach(std=>)
         })
       })
     }).catch(err => {
@@ -70,4 +98,6 @@ module.exports = {
   getGroups,
   addGroup,
   getGroup,
-addStudent}
+  addStudent,
+  getStudent,
+}
