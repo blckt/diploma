@@ -20,11 +20,22 @@ module.exports = [
   },{
     method:'POST',
     path:'/students/add',
-    config:controllers.addStudent
+    config:controllers.addStudentsToGroup
   },
   {
     method:'GET',
     path:'/student/{studentId}',
     config:controllers.getStudent
-  }
+  },
+  {
+    method:'GET',
+    path:'/group/info/{grpId}',
+    config:controllers.getGroupStat
+  },
+    {
+    method:'GET',
+    path:'/student/{studentId}/info',
+    config:controllers.getStudentSessionsInfo
+  },
 ];
+
