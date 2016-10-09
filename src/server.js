@@ -35,6 +35,7 @@ server.connection({
 module.exports = server;
 
 const initDb = function(cb) {
+    'use strict';
     let sequelize = models.sequelize;
     // Test if we're in a sqlite memory database. we may need to run migrations.
     if (sequelize.getDialect() === 'sqlite' &&
