@@ -1,15 +1,18 @@
 {
-  "port": 80,
-  "database": {
-    "username": "mqkjeaoeavjoab",
-    "password": "30BGNTN3B9AnwtXjlxMboTi6zb",
-    "database": "d97fd8rfbieveb",
-    "host": "ec2-23-21-165-201.compute-1.amazonaws.com",
-    "dialect": "postgres",
-    "native": true,
-    "ssl": true,
-    "dialectOptions": {
-      "ssl": true
+    "port": 80,
+    "database": {
+        "username": "blckt",
+        "password": "Sadilo1994",
+        "database": "schedulerDB",
+        "host": "blcktdb.database.windows.net",
+        "dialect": "mssql",
+        "pool": {
+            "max": 5,
+            "min": 0,
+            "idle": 10000
+        },
+        "dialectOptions": {
+            "encrypt": true
+        }
     }
-  }
 }
