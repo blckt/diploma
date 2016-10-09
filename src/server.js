@@ -23,7 +23,8 @@ const SYNC_DB_FORCE = process.env.NODE_ENV === 'production' || process.argv[proc
  */
 const server = new Hapi.Server(serverOptions);
 server.connection({
-    port: settings.port, host: settings.host, routes: {
+    port: process.env.port || settings.port, 
+    host: settings.host, routes: {
         files: {
             relativeTo: path.resolve(__dirname, '..', 'src', 'static')
         }
