@@ -13,7 +13,7 @@ const serverOptions = {
         }
     }
 };
-const SYNC_DB_FORCE = process.env.NODE_ENV === 'production' || process.argv[process.argv.length - 1] === 'true';
+const SYNC_DB_FORCE = process.argv[process.argv.length - 1] === 'true';
 /*
  ,
  debug: {
@@ -23,7 +23,7 @@ const SYNC_DB_FORCE = process.env.NODE_ENV === 'production' || process.argv[proc
  */
 const server = new Hapi.Server(serverOptions);
 server.connection({
-    port: process.env.PORT || settings.port, 
+    port: process.env.PORT || process.env.port || settings.port, 
     host: settings.host, routes: {
         files: {
             relativeTo: path.resolve(__dirname, '..', 'src', 'static')
