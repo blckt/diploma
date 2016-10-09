@@ -58,9 +58,7 @@
     "ssacl-attribute-roles": "0.0.5",
     "tedious": "^1.14.0",
     "vision": "^4.1.0",
-    "xlsx": "^0.8.0"
-  },
-  "devDependencies": {
+    "xlsx": "^0.8.0",
     "lab": "^4.7.0",
     "sqlite3": "^3.0.2",
     "typescript": "^1.8.10",
