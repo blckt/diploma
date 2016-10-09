@@ -1,7 +1,7 @@
 const { Student, Group, Roles, User, StudentsInGroups, Sessions } = require('../models')
 const Joi = require('joi')
-const _ = require('underscore');
-const async = require('async');
+const _ = require('underscore')
+const async = require('async')
 const getGroups = (request, reply) => {
   Group.findAll().then(data => reply(data))
 }
@@ -11,12 +11,11 @@ const getGroup = {
 
     Group.find({
       where: {
-        id
-      },
+      id},
       include: [{ all: true }]
     }).then((group) => {
       if (group) {
-        return reply(group);
+        return reply(group)
       }
       reply({ Status: 'Not Found' }).code(404)
     })
@@ -33,12 +32,29 @@ const getGroupStat = {
 
     Student.findAll({
       where: {
-        grpId
-      },
+      grpId},
       include: [{ all: true }]
     }).then((group) => {
       if (group) {
-        return reply(group);
+        let students = [];
+        let promises = [];
+        group.forEach(student => {
+          function getExamsPromise (cb) {
+            student.Sessions.forEach((session,index) => {
+
+              session.getExams().then(exams => {
+                  let std = student.get({plain:true});
+                  std.Sessions[index].exams = exams
+                  cb(null,std);
+              })
+            });
+          }
+          promises.push(getExamsPromise);
+        })
+        return async.series(promises,(err,result)=>{
+
+               reply({group,sessions:result})
+        });
       }
       reply({ Status: 'Not Found' }).code(404)
     })
@@ -51,17 +67,17 @@ const getGroupStat = {
 }
 const getStudent = {
   handler: (request, reply) => {
-    const {studentId} = request.params;
+    const {studentId} = request.params
     Student.find({
       where: { id: studentId },
-      include:[{all:true}]
+      include: [{all: true}]
     }).then((student) => {
       if (student) {
-        return reply({student});
+        return reply({student})
       }
       reply({
         status: 'not found'
-      }).code(404);
+      }).code(404)
     })
   },
   auth: 'jwt',
@@ -73,13 +89,13 @@ const getStudent = {
 }
 const getStudentSessionsInfo = {
   handler: (request, reply) => {
-    const {studentId} = request.params;
+    const {studentId} = request.params
     Student.find({
       where: { id: studentId },
       include: [{ model: Sessions }]
     }).then((student) => {
       if (student) {
-        const promises = [];
+        const promises = []
         student.Sessions.forEach(session => {
           promises.push((cb) => {
             session.getExams()
@@ -87,14 +103,13 @@ const getStudentSessionsInfo = {
                 cb(null, {
                   startYear: session.startYear,
                   endYear: session.endYear,
-                  exams
-                });
+                exams})
               })
-              .catch(err => cb(err));
+              .catch(err => cb(err))
           })
         })
         return async.series(promises, (err, results) => {
-          console.log('HERE!');
+          console.log('HERE!')
           reply({
             info: {
               sessions: results
@@ -105,7 +120,7 @@ const getStudentSessionsInfo = {
 
       reply({
         status: 'not found'
-      }).code(404);
+      }).code(404)
     })
   },
   auth: 'jwt',
@@ -123,26 +138,25 @@ const addStudentsToGroup = {
         Number: GroupNumber
       }
     }).spread((group, isCreated) => {
-      'use strict';
-      let studentsForUpdate = [];
+      'use strict'
+      let studentsForUpdate = []
       group.getStudents().then(students => {
-        const plainArray = students.map(student => student.get({ plain: true }));
-        let studentsToCreate = [];
-        let studentsToUpdate = [];
+        const plainArray = students.map(student => student.get({ plain: true }))
+        let studentsToCreate = []
+        let studentsToUpdate = []
         if (!!plainArray.length) {
           plainArray.forEach((dbStudent, index) => {
-            const isStudentExist = Students.some((receivedStudent) => receivedStudent.Name === dbStudent.Name);
+            const isStudentExist = Students.some((receivedStudent) => receivedStudent.Name === dbStudent.Name)
             if (!isStudentExist) {
-              studentsToCreate.push(receivedStudent);
+              studentsToCreate.push(receivedStudent)
             } else {
               studentsToUpdate.push({
                 student: students[index],
-                index
-              });
+              index})
             }
-          });
+          })
         } else {
-          studentsToCreate = Students;
+          studentsToCreate = Students
         }
         studentsToCreate.forEach(student => {
 
@@ -152,26 +166,25 @@ const addStudentsToGroup = {
               startYear: StudyYears[0],
               endYear: StudyYears[1]
             }).then(session => {
-              student.sessions[0].Exams.forEach(exam => session.createExam(exam));
+              student.sessions[0].Exams.forEach(exam => session.createExam(exam))
             })
-          });
-        });
+          })
+        })
         studentsToUpdate.forEach(({index, student}) => {
           student.getSessions()
             .then(sessions => {
-              console.log(sessions);
+              console.log(sessions)
             })
         })
         reply({ status: 'ok' })
-
-      });
+      })
     })
   },
   validate: {
     payload: {
       GroupNumber: Joi.string().required(),
       Students: Joi.array().required(),
-      StudyYears: Joi.array().required(),
+      StudyYears: Joi.array().required()
     }
   }
 }
@@ -203,8 +216,7 @@ const addSession = {
 const addSessionToDB = (session, id) => {
   Student.findOne({
     where: {
-      id
-    }
+    id}
   }).then(student => {
     student.createSessions(session).then(sess => console.log(sess))
   })
@@ -217,5 +229,4 @@ module.exports = {
   getStudent,
   addSession,
   getGroupStat,
-  getStudentSessionsInfo
-}
+getStudentSessionsInfo}
