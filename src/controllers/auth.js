@@ -125,9 +125,8 @@ const tokenValidation = (decoded, request, callback) => {
       login: decoded.login,
       createdAt: decoded.createdAt
     },
-    include: [{ all: true }]
+    include:[{model:models.Roles, as:'Role'}]
   };
-
   models.User.findAll (options)
         .then ((data) => {
           if (!data) {
@@ -157,7 +156,7 @@ const resetPassword = {
   handler: (request, reply) => {
 
   }
-}
+};
 const auth = {
   getToken,
   login,

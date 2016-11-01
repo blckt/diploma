@@ -46,7 +46,7 @@ module.exports = [
             roles: [ 'USER', 'ADMIN', ]
         }
     },
-    require('./xlsPlugin')
+    require('./xlsPlugin'),
     // require additional plugins here
 ];
 
